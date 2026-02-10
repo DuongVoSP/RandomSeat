@@ -306,11 +306,13 @@ function assignTeamsToSeats(zones, teamsInput) {
       } else {
         // không tránh được, chấp nhận bất kỳ team (weighted) -> có thể vi phạm điều kiện
         chosen = pickRandomWeighted(candidates);
-      if (!warnings.find((w) => w.includes("Không thể tránh hoàn toàn"))) {
-        warnings.push(
-          "Không thể tránh hoàn toàn việc thành viên cùng team ngồi cạnh nhau. Một số ghế sẽ vi phạm điều kiện."
-        );
+        if (!warnings.find((w) => w.includes("Không thể tránh hoàn toàn"))) {
+          warnings.push(
+            "Không thể tránh hoàn toàn việc thành viên cùng team ngồi cạnh nhau. Một số ghế sẽ vi phạm điều kiện."
+          );
+        }
       }
+
     }
 
     if (chosen) {
@@ -472,7 +474,6 @@ async function loadFileText(file) {
 }
 
 function renderFromTextarea() {
-  debugger;
   const raw = els.txtInput.value;
   const { zones, errors } = parseSeatTxt(raw);
 
@@ -558,4 +559,3 @@ function wire() {
 }
 
 wire();
-}
