@@ -1,0 +1,8 @@
+NGODev 12 #1ABC9C     
+NGOQA 6 #2E86C1       
+Aspia 7 #BB51FF       
+Fresher 6 #1F5FBF
+UI/UX 2 #8E44AD       
+Kaskalot 2 #FF3D71    
+ART/EEP 2 #E91E63     
+eWater 3 #3B82F6      

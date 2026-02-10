@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sơ đồ chỗ ngồi (TXT)</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="container header">
+      <div>
+        <h1>Sơ đồ chỗ ngồi</h1>
+        <p class="muted">
+          Nhập file <code>.txt</code> dạng mỗi dòng:
+          <code>T rows cols</code> (bên trái) hoặc <code>P rows cols</code> (bên phải). Ví dụ:
+          <code>T 5 3</code>.
+        </p>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="panel">
+        <div class="row wrap gap">
+          <label class="btn">
+            <input id="fileInput" type="file" accept=".txt,text/plain" hidden />
+            Chọn file .txt
+          </label>
+
+          <button id="btnLoadSample" class="btn secondary" type="button">
+            Nạp dữ liệu mẫu
+          </button>
+
+          <button id="btnRender" class="btn primary" type="button">
+            Vẽ sơ đồ
+          </button>
+
+          <div class="spacer"></div>
+
+          <label class="toggle">
+            <input id="chkShowLabels" type="checkbox" checked />
+            <span>Hiện nhãn ghế</span>
+          </label>
+
+          <label class="toggle">
+            <input id="chkCompact" type="checkbox" />
+            <span>Chế độ nhỏ gọn</span>
+          </label>
+        </div>
+
+        <div class="grid2 gap">
+          <div>
+            <div class="label">Dữ liệu TXT</div>
+            <textarea
+              id="txtInput"
+              class="textarea"
+              spellcheck="false"
+              placeholder="Ví dụ:&#10;T 5 2&#10;T 5 3&#10;P 5 3"
+            ></textarea>
+            <div class="hint muted">
+              Ghi chú: bỏ qua dòng trống; dòng bắt đầu bằng <code>#</code> sẽ bị bỏ qua.
+              Prefix: <code>T</code> = bên trái, <code>P</code> = bên phải.
+            </div>
+          </div>
+          <div>
+            <div class="label">Trạng thái sơ đồ &amp; team</div>
+            <pre id="status" class="status" aria-live="polite"></pre>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="row wrap gap">
+          <div class="label" style="margin-bottom:0">Dữ liệu team (tên, số lượng, màu)</div>
+          <div class="spacer"></div>
+          <label class="btn">
+            <input id="teamFileInput" type="file" accept=".txt,text/plain" hidden />
+            Chọn file team .txt
+          </label>
+          <button id="btnAssign" class="btn primary" type="button">
+            Sắp xếp chỗ ngồi theo team
+          </button>
+        </div>
+        <div class="grid2 gap">
+          <div>
+            <textarea
+              id="teamTxtInput"
+              class="textarea"
+              spellcheck="false"
+              placeholder="Ví dụ:&#10;Dev 10 #22c55e&#10;QA 6 #f97316&#10;PM 3 #3b82f6"
+            ></textarea>
+            <div class="hint muted">
+              Mỗi dòng: <code>TÊN_TEAM SỐ_LƯỢNG MÀU_HEX</code>. Dòng bắt đầu bằng <code>#</code> sẽ bị
+              bỏ qua.
+            </div>
+          </div>
+          <div class="muted" style="font-size:13px">
+            <p><strong>Nguyên tắc sắp xếp</strong></p>
+            <ul>
+              <li>Thành viên cùng team cố gắng không ngồi cạnh nhau (trên/dưới/trái/phải) trong cùng khu.</li>
+              <li>Nếu không đủ chỗ để thỏa điều kiện, thuật toán sẽ chấp nhận một số ghế cạnh nhau.</li>
+              <li>Tổng số lượng tất cả team không nên vượt quá tổng số ghế.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel">
+        <div class="row gap align-center">
+          <h2 class="h2">Kết quả</h2>
+          <div class="spacer"></div>
+          <div class="muted" id="summary"></div>
+        </div>
+        <div id="output" class="output"></div>
+      </section>
+    </main>
+
+    <footer class="container footer muted">
+      Chạy offline. Nếu mở trực tiếp bị chặn đọc file, hãy dùng Python server (xem README).
+    </footer>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
+
