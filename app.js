@@ -257,29 +257,11 @@ function assignTeamsToSeats(zones, teamsInput) {
 
   const assignment = new Array(seats.length).fill(null);
 
-  // Điều kiện: nếu có team eWater thì luôn có 1 vị trí tại Khu 1 - R2-C6 (1-based => r=1, c=5)
-  const eWater = teams.find((t) => String(t.name).trim().toLowerCase() === "ewater");
-  const R2 = 1;
-  const C6 = 5;
-  const KHU_1 = 0;
-  let fixedR2C6SeatIdx = null;
-  if (zones[KHU_1] && zones[KHU_1].rows >= 2 && zones[KHU_1].cols >= 6) {
-    const idx = seats.findIndex(
-      (s) => s.zoneIndex === KHU_1 && s.r === R2 && s.c === C6
-    );
-    if (idx !== -1) fixedR2C6SeatIdx = idx;
-  }
-  if (eWater && fixedR2C6SeatIdx !== null && eWater.remaining > 0) {
-    assignment[fixedR2C6SeatIdx] = eWater.id;
-    eWater.remaining -= 1;
-  }
-
   // Order chỉ những ghế "usable" theo pattern checkerboard để giảm đụng hàng xóm
   const seatOrder = seats
     .map((s, idx) => ({ ...s, idx, _rand: Math.random() }))
     .filter(
       (s) =>
-        s.idx !== fixedR2C6SeatIdx &&
         (!usableIndexSet || usableIndexSet.has(s.idx))
     )
     .sort((a, b) => {
